@@ -13,7 +13,7 @@ const PeopleService = (config: PeopleServiceApi) => {
     const list = async (): PeopleModel[] => {
 
         try {
-            const data = await api.get(``);
+            const data = await api.get(`people/`);
 
             return data.map((item: FilmsModel) => {
 

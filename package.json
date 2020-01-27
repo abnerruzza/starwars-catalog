@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@rehooks/window-scroll-position": "^1.0.1",
+    "@splidejs/splide": "^1.3.4",
     "bootstrap": "^4.4.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",

@@ -1,8 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes                    from 'prop-types';
-import FilmsService                 from "../../../Services/FilmsService";
-import type FilmsModel              from "../../../Models/FilmsModel";
-import SplideContainer              from "../../Generics/SplideContainer";
+import PropTypes         from 'prop-types';
 import {
     Badge,
     Card,
@@ -13,20 +10,22 @@ import {
     Col,
     Container,
     Row
-}                                   from "reactstrap";
-import {Link}                       from "react-router-dom";
-import LoadingSvg                   from "../../Generics/LoadingSvg";
+}                        from "reactstrap";
+import LoadingSvg        from "../../Generics/LoadingSvg";
+import SplideContainer   from "../../Generics/SplideContainer";
+import type FilmsModel   from "../../../Models/FilmsModel";
+import {Link}            from "react-router-dom";
 
-const FilmsBlockList = props => {
-    const [films, setFilms] = useState([]);
+const PeopleBlockList = props => {
+    const [people, setPeople] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const listFilms = async () => {
         setLoading(true);
         try {
-            const data = await props.listFilms();
-            setFilms( data.results );
+            const data = await props.listPeople();
+            setPeople( data.results );
             setLoading(false);
         } catch (e) {
             setError( e.message );
@@ -43,8 +42,8 @@ const FilmsBlockList = props => {
     return (
         <section className="mt-5">
             <Container fluid>
-                <h2 className="section-title text-center mb-2 h1">Films</h2>
-                <p className="text-center text-muted h5">StarWars films</p>
+                <h2 className="section-title text-center mb-2 h1">People</h2>
+                <p className="text-center text-muted h5">StarWars people</p>
 
                 <Row >
                     <Col className="px-5 pt-5 text-center">
@@ -54,12 +53,12 @@ const FilmsBlockList = props => {
                             <SplideContainer
                                 className="films-list"
                                 options={{rewind: true, type: 'loop', perPage: 3, pagination: false, gap: 20, breakpoints: {640: {perPage: 1}, 768: {perPage: 2}, 1024: {perPage: 3}} } }
-                                slides={films.map((item: FilmsModel, index) => {
+                                slides={people.map((item: FilmsModel, index) => {
 
                                     return (
                                         <Card key={index} className="text-center cursor-pointer">
                                             <CardBody>
-                                                <img src="/img/icons/photographic-film.png" alt="Film" className="mb-2"/>
+                                                <img src="/img/icons/actor.png" alt="People" className="mb-2"/>
                                                 <CardTitle>
                                                     <h5><Badge color="secondary">Episode {item.episode_id}</Badge></h5>
                                                     <h4><Link to={'/'}>{item.title}</Link></h4>
@@ -77,11 +76,11 @@ const FilmsBlockList = props => {
                 </Row>
 
                 {(!loading && !error) &&
-                    <Row>
-                        <Col className="text-right px-5 pt-3">
-                            <Link to={"/"}>+ See all</Link>
-                        </Col>
-                    </Row>
+                <Row>
+                    <Col className="text-right px-5 pt-3">
+                        <Link to={"/"}>+ See all</Link>
+                    </Col>
+                </Row>
                 }
 
             </Container>
@@ -89,8 +88,8 @@ const FilmsBlockList = props => {
     );
 };
 
-FilmsBlockList.propTypes = {
-    listFilms: PropTypes.func,
+PeopleBlockList.propTypes = {
+    listPeople: PropTypes.func,
 };
 
-export default FilmsBlockList;
+export default PeopleBlockList;

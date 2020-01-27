@@ -1,11 +1,13 @@
-import React from 'react';
-import FilmsBlockList from "../Components/ViewComponents/Home/FilmsBlockList";
+import React           from 'react';
+import FilmsBlockList  from "../Components/ViewComponents/Home/FilmsBlockList";
+import PeopleBlockList from "../Components/ViewComponents/Home/PeopleBlockList";
 
 const HomeView = props => {
     return (
-        <div style={{height: 800}}>
+        <>
             <FilmsBlockList listFilms={props.listFilms} />
-        </div>
+            <PeopleBlockList listPeople={props.listPeople} />
+        </>
     );
 };
 
