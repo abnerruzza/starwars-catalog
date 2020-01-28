@@ -15,17 +15,20 @@ const PeopleService = (config: PeopleServiceApi) => {
         try {
             const data = await api.get(`people/`);
 
-            return data.map((item: FilmsModel) => {
-
-                return {
-                    ...item,
-                    created_formatted: moment(item.created).format(),
-                    edited_formatted: moment(item.edited).format(),
-                }
-            })
+            return {
+                ...data,
+                results: data.results.map((item: PeopleModel) => {
+                    return {
+                        ...item,
+                        created_formatted: moment(item.created).format("DD/MM/YYYY"),
+                        edited_formatted: moment(item.edited).format("DD/MM/YYYY"),
+                        birth_year_formatted: moment(item.birth_year).format("DD/MM/YYYY"),
+                    }
+                })
+            }
 
         } catch (e) {
-            throw {error: true, message: "Ops. Films list dont working :("};
+            throw {error: true, message: "Ops. People list dont working :("};
         }
     }
 

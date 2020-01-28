@@ -15,6 +15,7 @@ import LoadingSvg        from "../../Generics/LoadingSvg";
 import SplideContainer   from "../../Generics/SplideContainer";
 import type FilmsModel   from "../../../Models/FilmsModel";
 import {Link}            from "react-router-dom";
+import type PeopleModel from "../../../Models/PeopleModel";
 
 const PeopleBlockList = props => {
     const [people, setPeople] = useState([]);
@@ -53,17 +54,17 @@ const PeopleBlockList = props => {
                             <SplideContainer
                                 className="films-list"
                                 options={{rewind: true, type: 'loop', perPage: 3, pagination: false, gap: 20, breakpoints: {640: {perPage: 1}, 768: {perPage: 2}, 1024: {perPage: 3}} } }
-                                slides={people.map((item: FilmsModel, index) => {
+                                slides={people.map((item: PeopleModel, index) => {
 
                                     return (
                                         <Card key={index} className="text-center cursor-pointer">
                                             <CardBody>
                                                 <img src="/img/icons/actor.png" alt="People" className="mb-2"/>
                                                 <CardTitle>
-                                                    <h5><Badge color="secondary">Episode {item.episode_id}</Badge></h5>
-                                                    <h4><Link to={'/'}>{item.title}</Link></h4>
+                                                    <h5><Badge color="secondary">{item.gender}</Badge></h5>
+                                                    <h4><Link to={'/'}>{item.name}</Link></h4>
                                                 </CardTitle>
-                                                <CardSubtitle>Director: {item.director}</CardSubtitle>
+                                                <CardSubtitle>{item.birth_year}</CardSubtitle>
                                                 <CardText><small>{item.opening_crawl}</small></CardText>
                                             </CardBody>
                                         </Card>
