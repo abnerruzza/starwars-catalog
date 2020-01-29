@@ -9,10 +9,14 @@ type FilmsServiceApi = ApiConfig;
 const FilmsService = (config: FilmsServiceApi) => {
     const api = useApi(config);
 
-    const list = async (): FilmsModel[] => {
+    const list = async (search): FilmsModel[] => {
+
+        let searchParam = "";
+
+        if(search) searchParam = `?search=${search}`;
 
         try {
-            const data = await api.get(`films/`);
+            const data = await api.get(`films/${searchParam}`);
 
             return {
                 ...data,
@@ -28,9 +32,17 @@ const FilmsService = (config: FilmsServiceApi) => {
         } catch (e) {
             throw {error: true, message: "Ops. Films list dont working :("};
         }
+    };
+
+    const getOne = async (id): FilmsModel => {
+        try {
+            return await api.get(`films/${id}`);
+        } catch (e) {
+            throw {error: true, message: "Ops."};
+        }
     }
 
-    return {list};
+    return {list, getOne, api};
 };
 
 export default FilmsService;

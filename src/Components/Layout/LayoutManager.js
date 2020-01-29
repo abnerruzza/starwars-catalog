@@ -4,11 +4,13 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Routes from "../../Config/Routes";
 
-const LayoutMannager = () => {
+const LayoutMannager = props => {
+
+    const { location } = props;
 
     return (
         <>
-            <Header />
+            <Header pathname={location.pathname} />
 
             <Switch>
                 {Routes.map((route, index) => {
