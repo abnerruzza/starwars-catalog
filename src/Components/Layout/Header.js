@@ -40,14 +40,14 @@ const Header = props => {
                                 <NavLink className="nav-link" to="/films">Films</NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Persons</a>
+                                <NavLink className="nav-link" to="/people">People</NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Planets</a>
+                                <NavLink className="nav-link" to="/planets">Planets</NavLink>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                                    Dropdown link
+                                    More
                                 </a>
                                 <div className="dropdown-menu">
                                     <a className="dropdown-item" href="#">Link 1</a>

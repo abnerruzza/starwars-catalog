@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import HomeView                     from "../Views/HomeView";
 import FilmsService                 from "../Services/FilmsService";
-import PeopleService                from "../Services/PeopleService";
 import FilmDetailView from "../Views/Films/FilmDetailView";
 import FilmListView from "../Views/Films/FilmListView";
 
@@ -9,7 +7,7 @@ const FilmsController = props => {
     const [filmData, setFilmData] = useState(null);
     const [search, setSearch] = useState(null);
     const filmService = FilmsService({loadingControl: true});
-    const {match, location} = props;
+    const {match, history} = props;
 
     const listFilms = async () => {
         try {
@@ -35,9 +33,11 @@ const FilmsController = props => {
     }, [match.params.id]);
 
     if(match.params.id) {
-        return <FilmDetailView filmData={filmData} getFilm={getFilm} />
+        return (
+            <FilmDetailView history={history} filmData={filmData} getFilm={getFilm} loading={filmService.api.loading} />
+        )
     } else {
-        return <FilmListView setSearch={setSearch} filmData={filmData} listFilms={listFilms} loading={filmService.api.loading} />
+        return <FilmListView history={history} setSearch={setSearch} filmData={filmData} listFilms={listFilms} loading={filmService.api.loading} />
     }
 };
 

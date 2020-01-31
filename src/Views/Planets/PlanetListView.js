@@ -5,21 +5,21 @@ import {Link} from "react-router-dom";
 import LoadingSvg from "../../Components/Generics/LoadingSvg";
 import PageTitleSection from "../../Components/Generics/PageTitleSection";
 import PageSearchSection from "../../Components/Generics/PageSearchSection";
-import type FilmsModel from "../../Models/FilmsModel";
+import type PlanetsModel from "../../Models/PlanetsModel";
 
-const FilmListView = props => {
+const PlanetListView = props => {
     return (
         <>
 
             <PageTitleSection
-                title="Films"
-                subtitle="StarWars films catalog"
+                title="Planets"
+                subtitle="StarWars planets catalog"
             />
 
             <PageSearchSection
-                listFunction={props.listFilms}
+                listFunction={props.listData}
                 setSearchValue={props.setSearch}
-                fieldPlaceholder="Search for Film title"
+                fieldPlaceholder="Search for Planet title"
             />
 
             <section className="mt-5 mx-3">
@@ -28,19 +28,20 @@ const FilmListView = props => {
 
                 <Container fluid>
                     <Row >
-                        {props.filmData?.results?.map((item: FilmsModel, index) => {
-                            return (
+                        {props.apiData?.results?.map((item: PlanetsModel, index) => {
 
+                            const detailUrl = `/planets/${item.id}`;
+
+                            return (
                                 <Col sm={4} className="mb-5">
-                                    <Card key={index} className="text-center cursor-pointer" onClick={() => props.history.push(`/films/${item.id}`)}>
+                                    <Card key={index} className="text-center cursor-pointer" onClick={() => props.history.push(detailUrl)}>
                                         <CardBody>
-                                            <img src="/img/icons/photographic-film.png" alt="Film" className="mb-2"/>
+                                            <img src="/img/icons/planet.png" alt="Planet" className="mb-2"/>
                                             <CardTitle>
-                                                <h5><Badge color="secondary">Episode {item.episode_id}</Badge></h5>
-                                                <h4><Link to={`/films/${item.episode_id}`}>{item.title}</Link></h4>
+                                                <h4><Link to={detailUrl}>{item.name}</Link></h4>
                                             </CardTitle>
-                                            <CardSubtitle>Director: {item.director}</CardSubtitle>
-                                            <CardText><small>{item.opening_crawl}</small></CardText>
+                                            <CardSubtitle></CardSubtitle>
+                                            <CardText></CardText>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -55,8 +56,11 @@ const FilmListView = props => {
     );
 };
 
-FilmListView.propTypes = {
-    setFilter: PropTypes.func,
+PlanetListView.propTypes = {
+    apiData: PropTypes.object,
+    listData: PropTypes.func,
+    setSearch: PropTypes.func,
+    history: PropTypes.object,
 };
 
-export default FilmListView;
+export default PlanetListView;

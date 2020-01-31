@@ -5,21 +5,21 @@ import {Link} from "react-router-dom";
 import LoadingSvg from "../../Components/Generics/LoadingSvg";
 import PageTitleSection from "../../Components/Generics/PageTitleSection";
 import PageSearchSection from "../../Components/Generics/PageSearchSection";
-import type FilmsModel from "../../Models/FilmsModel";
+import type PeopleModel from "../../Models/PeopleModel";
 
-const FilmListView = props => {
+const PeopleListView = props => {
     return (
         <>
 
             <PageTitleSection
-                title="Films"
-                subtitle="StarWars films catalog"
+                title="People"
+                subtitle="StarWars people catalog"
             />
 
             <PageSearchSection
-                listFunction={props.listFilms}
+                listFunction={props.listPeople}
                 setSearchValue={props.setSearch}
-                fieldPlaceholder="Search for Film title"
+                fieldPlaceholder="Search for People title"
             />
 
             <section className="mt-5 mx-3">
@@ -28,19 +28,19 @@ const FilmListView = props => {
 
                 <Container fluid>
                     <Row >
-                        {props.filmData?.results?.map((item: FilmsModel, index) => {
+                        {props.peopleData?.results?.map((item: PeopleModel, index) => {
                             return (
 
                                 <Col sm={4} className="mb-5">
-                                    <Card key={index} className="text-center cursor-pointer" onClick={() => props.history.push(`/films/${item.id}`)}>
+                                    <Card key={index} className="text-center cursor-pointer" onClick={() => props.history.push(`/people/${item.id}`)}>
                                         <CardBody>
-                                            <img src="/img/icons/photographic-film.png" alt="Film" className="mb-2"/>
+                                            <img src="/img/icons/actor.png" alt="Actor" className="mb-2"/>
                                             <CardTitle>
-                                                <h5><Badge color="secondary">Episode {item.episode_id}</Badge></h5>
-                                                <h4><Link to={`/films/${item.episode_id}`}>{item.title}</Link></h4>
+                                                <h5>{item.mass} Kg</h5>
+                                                <h4><Link to={`/people/${item.id}`}>{item.name}</Link></h4>
                                             </CardTitle>
-                                            <CardSubtitle>Director: {item.director}</CardSubtitle>
-                                            <CardText><small>{item.opening_crawl}</small></CardText>
+                                            <CardSubtitle>{item.birth_year}</CardSubtitle>
+                                            <CardText>s</CardText>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -55,8 +55,10 @@ const FilmListView = props => {
     );
 };
 
-FilmListView.propTypes = {
+PeopleListView.propTypes = {
+    peopleData: PropTypes.array,
+    listPeople: PropTypes.func,
     setFilter: PropTypes.func,
 };
 
-export default FilmListView;
+export default PeopleListView;

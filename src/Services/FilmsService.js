@@ -21,11 +21,7 @@ const FilmsService = (config: FilmsServiceApi) => {
             return {
                 ...data,
                 results: data.results.map((item: FilmsModel) => {
-                    return {
-                        ...item,
-                        created_formatted: moment(item.created).format(),
-                        edited_formatted: moment(item.edited).format(),
-                    }
+                    return mutate(item);
                 })
             }
 
@@ -36,9 +32,22 @@ const FilmsService = (config: FilmsServiceApi) => {
 
     const getOne = async (id): FilmsModel => {
         try {
-            return await api.get(`films/${id}`);
+            return mutate(await api.get(`films/${id}`));
         } catch (e) {
             throw {error: true, message: "Ops."};
+        }
+    }
+
+    const mutate = (data: FilmsModel) => {
+
+        const urlPieces = data.url.split("/");
+
+        return {
+            ...data,
+            id: urlPieces[urlPieces.length - 2],
+            release_date_formatted: moment(data.release_date).format("DD/MM/YYYY"),
+            created_formatted: moment(data.created).format("DD/MM/YYYY HH:mm"),
+            edited_formatted: moment(data.edited).format("DD/MM/YYYY HH:mm"),
         }
     }
 
