@@ -33,9 +33,7 @@ const FilmsController = props => {
     }, [match.params.id]);
 
     if(match.params.id) {
-        return (
-            <FilmDetailView history={history} filmData={filmData} getFilm={getFilm} loading={filmService.api.loading} />
-        )
+        return <FilmDetailView history={history} filmData={filmData} getFilm={getFilm} loading={filmService.api.loading} />
     } else {
         return <FilmListView history={history} setSearch={setSearch} filmData={filmData} listFilms={listFilms} loading={filmService.api.loading} />
     }

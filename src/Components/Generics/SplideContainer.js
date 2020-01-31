@@ -36,13 +36,6 @@ SplideContainer.defaultProps = {
 }
 
 SplideContainer.propTypes = {
-    resizes: PropTypes.shape({
-        xl: PropTypes.number,
-        lg: PropTypes.number,
-        md: PropTypes.number,
-        sm: PropTypes.number,
-        xs: PropTypes.number,
-    }),
     slides: PropTypes.array,
     itemClass: PropTypes.string,
     options: PropTypes.shape({

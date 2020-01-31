@@ -1,7 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import useWindowScrollPosition from '@rehooks/window-scroll-position';
-import {Link, NavLink} from "react-router-dom";
+import PropTypes                    from 'prop-types';
+import useWindowScrollPosition      from '@rehooks/window-scroll-position';
+import {Link, NavLink}              from "react-router-dom";
+import {
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    UncontrolledDropdown
+} from "reactstrap";
 
 /**
  * O Header tem um pacote que atualiza o state desse component quando
@@ -45,16 +51,16 @@ const Header = props => {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/planets">Planets</NavLink>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <UncontrolledDropdown nav>
+                                <DropdownToggle tag='a' caret className="nav-link cursor-pointer">
                                     More
-                                </a>
-                                <div className="dropdown-menu">
-                                    <a className="dropdown-item" href="#">Link 1</a>
-                                    <a className="dropdown-item" href="#">Link 2</a>
-                                    <a className="dropdown-item" href="#">Link 3</a>
-                                </div>
-                            </li>
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <Link className="dropdown-item" to={"/vehicles"} >Vehicles</Link>
+                                    <Link className="dropdown-item" to={"/starships"} >Starships</Link>
+                                    <Link className="dropdown-item" to={"/species"} >Species</Link>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                         </ul>
                     </div>
                 </div>
