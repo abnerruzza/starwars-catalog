@@ -10,13 +10,15 @@ import StarshipsService   from "../Services/StarshipsService";
 /**
  * Este controller monta uma função para cada listagem da home e passa por props para a view
  */
-const HomeController = () => {
+const HomeController = props => {
     const filmService = FilmsService({loadingControl: false});
     const peopleService = PeopleService({loadingControl: false});
     const planetService = PlanetsService({loadingControl: false});
     const vehicleService = VehiclesService({loadingControl: false});
     const specieService = SpeciesService({loadingControl: false});
     const starshipService = StarshipsService({loadingControl: false});
+
+    const {history} = props;
 
     const listFilms = async () => {
         try {
@@ -66,6 +68,7 @@ const HomeController = () => {
             listVehicles={listVehicles}
             listSpecies={listSpecies}
             listStarships={listStarships}
+            history={history}
         />
     );
 };

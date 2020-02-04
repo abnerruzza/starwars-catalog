@@ -11,12 +11,12 @@ import VehiclesBlockList  from "../Components/ViewComponents/Home/VehiclesBlockL
 const HomeView = props => {
     return (
         <Container>
-            <FilmsBlockList listData={props.listFilms} />
-            <PeopleBlockList listData={props.listPeople} />
-            <PlanetsBlockList listData={props.listPlanets} />
-            <SpeciesBlockList listData={props.listSpecies} />
-            <StarshipsBlockList listData={props.listStarships} />
-            <VehiclesBlockList listData={props.listVehicles} />
+            <FilmsBlockList listData={props.listFilms} history={props.history} />
+            <PeopleBlockList listData={props.listPeople} history={props.history} />
+            <PlanetsBlockList listData={props.listPlanets} history={props.history} />
+            <SpeciesBlockList listData={props.listSpecies} history={props.history} />
+            <StarshipsBlockList listData={props.listStarships} history={props.history} />
+            <VehiclesBlockList listData={props.listVehicles} history={props.history} />
             <div className="mt-5" />
         </Container>
     );
