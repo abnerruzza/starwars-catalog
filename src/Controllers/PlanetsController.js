@@ -1,7 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import PlanetsService from "../Services/PlanetsService";
+import React, {
+    useEffect,
+    useState
+}                       from 'react';
+import PlanetsService   from "../Services/PlanetsService";
 import PlanetDetailView from "../Views/Planets/PlanetDetailView";
-import PlanetListView from "../Views/Planets/PlanetListView";
+import PlanetListView   from "../Views/Planets/PlanetListView";
+import {usePaginate}    from "../Hooks/Helpers";
 
 const PlanetsController = props => {
     const [apiData, setApiData] = useState(null);
@@ -9,9 +13,15 @@ const PlanetsController = props => {
     const service = PlanetsService({loadingControl: true});
     const {match, history} = props;
 
-    const listData = async () => {
+    const [page, setPage] = usePaginate((page) => {
+        scrollToElement("body");
+        setApiData([]);
+        listData(page);
+    });
+
+    const listData = async (page) => {
         try {
-            const data =  await service.list(search);
+            const data =  await service.list(search, page);
             setApiData(data)
         } catch (e) { throw e; }
     };
@@ -33,10 +43,27 @@ const PlanetsController = props => {
     }, [match.params.id]);
 
     if(match.params.id) {
-        return <PlanetDetailView history={history} apiData={apiData} getData={getData} loading={service.api.loading} />
+        return (
+            <PlanetDetailView
+                history={history}
+                apiData={apiData}
+                getData={getData}
+                loading={service.api.loading}
+            />
+        )
 
     } else {
-        return <PlanetListView history={history} setSearch={setSearch} apiData={apiData} listData={listData} loading={service.api.loading} />
+        return (
+            <PlanetListView
+                history={history}
+                setSearch={setSearch}
+                setPage={setPage}
+                page={page}
+                apiData={apiData}
+                listData={listData}
+                loading={service.api.loading}
+            />
+        )
     }
 };
 

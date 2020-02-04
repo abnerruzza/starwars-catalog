@@ -4,9 +4,10 @@ import {Container} from "reactstrap";
 
 const PageTitleSection = props => {
     return (
-        <section className="mt-5 pt-5">
-            <Container fluid>
-                <h2 className="section-title text-center mb-2 h1">{props.title}</h2>
+        <section className={props.className || "mt-5 pt-5"}>
+            <Container fluid className="text-center">
+                {!!props.imgSrc && <img src={props.imgSrc} alt={props.title} /> }
+                <h2 className="section-title mb-2 h1">{props.title}</h2>
                 <p className="text-center text-muted h5">{props.subtitle}</p>
             </Container>
         </section>
@@ -16,6 +17,8 @@ const PageTitleSection = props => {
 PageTitleSection.propTypes = {
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    className: PropTypes.string,
+    imgSrc: PropTypes.string,
 };
 
-export default PageTitleSection;
+export default React.memo(PageTitleSection);

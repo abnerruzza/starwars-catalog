@@ -1,20 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {BulletList, List} from 'react-content-loader'
+import React            from 'react';
+import PropTypes        from 'prop-types';
 import PageTitleSection from "../../Components/Generics/PageTitleSection";
-import LoadingSvg from "../../Components/Generics/LoadingSvg";
-import {Badge, Button, Col, Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Row} from "reactstrap";
-import DetailList from "../../Components/Generics/DetailList";
+import LoadingSvg       from "../../Components/Generics/LoadingSvg";
+import {
+    Col,
+    Container,
+    Row
+}                       from "reactstrap";
+import DetailList       from "../../Components/Generics/DetailList";
+import RelatedFilms     from "../../Components/ViewComponents/RelatedContent/RelatedFilms";
+import RelatedPeople    from "../../Components/ViewComponents/RelatedContent/RelatedPeople";
 
 const PlanetDetailView = props => {
 
     const {apiData} = props;
 
     return (
-        <>
+        <div className="main-content">
             <PageTitleSection
                 title={props.loading ? <LoadingSvg/> : apiData?.name}
                 subtitle={""}
+                imgSrc="/img/icons/planet.png"
             />
 
             <Container className="mt-5">
@@ -49,20 +55,22 @@ const PlanetDetailView = props => {
                     </Col>
                 </Row>
 
-                <Row className="mt-4">
-                    <Col className="text-center">
-                        <Button color="primary" outline>
-                            Films <Badge color="secondary">{apiData?.films?.length}</Badge>
-                        </Button>
-                        &nbsp;&nbsp;
-                        <Button color="primary" outline>
-                            Residents <Badge color="secondary">{apiData?.residents?.length}</Badge>
-                        </Button>
-                    </Col>
-                </Row>
+                <RelatedFilms
+                    history={props.history}
+                    films={apiData?.films}
+                />
+
+                <RelatedPeople
+                    history={props.history}
+                    people={apiData?.residents}
+                    title={"Related Residents"}
+                    itemImgSrc={"/img/icons/actor.png"}
+                    personType="resident"
+                />
+
             </Container>
 
-        </>
+        </div>
     );
 };
 

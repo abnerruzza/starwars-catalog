@@ -1,30 +1,30 @@
-import React              from 'react';
-import PropTypes          from 'prop-types';
+import React               from 'react';
+import PropTypes           from 'prop-types';
 import {
     Col,
     Container,
     Row
-}                         from "reactstrap";
-import LoadingSvg         from "../../Components/Generics/LoadingSvg";
-import PageTitleSection   from "../../Components/Generics/PageTitleSection";
-import PageSearchSection  from "../../Components/Generics/PageSearchSection";
-import type VehiclesModel from "../../Models/VehiclesModel";
-import ListCard           from "../../Components/Generics/ListCard";
-import Pagination         from "../../Components/Generics/Pagination";
+}                          from "reactstrap";
+import LoadingSvg          from "../../Components/Generics/LoadingSvg";
+import PageTitleSection    from "../../Components/Generics/PageTitleSection";
+import PageSearchSection   from "../../Components/Generics/PageSearchSection";
+import ListCard            from "../../Components/Generics/ListCard";
+import Pagination          from "../../Components/Generics/Pagination";
+import type StarshipsModel from "../../Models/StarshipsModel";
 
-const VehicleListView = props => {
+const StarshipListView = props => {
     return (
         <div className="main-content">
 
             <PageTitleSection
-                title="Vehicles"
-                subtitle="StarWars vehicles catalog"
+                title="Starships"
+                subtitle="StarWars starships catalog"
             />
 
             <PageSearchSection
                 listFunction={props.listData}
                 setSearchValue={props.setSearch}
-                fieldPlaceholder="Search for Vehicle Name or Model"
+                fieldPlaceholder="Search for Starships Name or Model"
             />
 
             <section className="mt-5 mx-3">
@@ -33,9 +33,9 @@ const VehicleListView = props => {
 
                 <Container fluid>
                     <Row >
-                        {props.apiData?.results?.map((item: VehiclesModel, index) => {
+                        {props.apiData?.results?.map((item: StarshipsModel, index) => {
 
-                            const detailUrl = `/vehicles/${item.id}`;
+                            const detailUrl = `/starships/${item.id}`;
 
                             return (
                                 <Col key={index} sm={12} md={6} lg={4} xl={3} className="mb-5">
@@ -43,16 +43,16 @@ const VehicleListView = props => {
                                     <ListCard
                                         onClick={() => props.history.push(detailUrl)}
                                         url={detailUrl}
-                                        borderColor="green-border"
-                                        iconSrc="/img/icons/rickshaw.png"
+                                        borderColor="purple-border"
+                                        iconSrc="/img/icons/spaceship.png"
                                         title={item.name}
-                                        subtitle={item.model}
+                                        subtitle={"starship"}
                                         numbers={[
-                                            {title: "Speed", value: item.max_atmosphering_speed},
-                                            {title: "Crew", value: item.crew},
+                                            {title: "Cost in Credits", value: item.cost_in_credits},
+                                            {title: "Length", value: item.length},
                                         ]}
                                         relations={[
-                                            {title: "Pilots", icon: "/img/icons/actor.png", items: item.pilots},
+                                            {title: "Pilots", icon: "/img/icons/pilot.png", items: item.pilots},
                                             {title: "Films", icon: "/img/icons/photographic-film.png", items: item.films}
                                         ]}
                                     />
@@ -78,7 +78,7 @@ const VehicleListView = props => {
     );
 };
 
-VehicleListView.propTypes = {
+StarshipListView.propTypes = {
     apiData: PropTypes.object,
     listData: PropTypes.func,
     setSearch: PropTypes.func,
@@ -87,4 +87,4 @@ VehicleListView.propTypes = {
     setPage: PropTypes.func,
 };
 
-export default VehicleListView;
+export default StarshipListView;

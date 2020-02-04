@@ -11,7 +11,7 @@ import DetailList       from "../../Components/Generics/DetailList";
 import RelatedPeople    from "../../Components/ViewComponents/RelatedContent/RelatedPeople";
 import RelatedFilms     from "../../Components/ViewComponents/RelatedContent/RelatedFilms";
 
-const VehicleDetailView = props => {
+const SpecieDetailView = props => {
 
     const {apiData} = props;
 
@@ -20,6 +20,7 @@ const VehicleDetailView = props => {
             <PageTitleSection
                 title={props.loading ? <LoadingSvg/> : apiData?.name}
                 subtitle={""}
+                imgSrc="/img/icons/yoda.png"
             />
 
             <Container className="mt-5">
@@ -29,11 +30,10 @@ const VehicleDetailView = props => {
                         <DetailList
                             loading={props.loading}
                             data={[
-                                {title: "Model", desc: apiData?.model },
-                                {title: "Vehicle Class", desc: apiData?.vehicle_class  },
-                                {title: "Manufacturer ", desc: apiData?.manufacturer   },
-                                {title: "Length", desc: <>{apiData?.length} meters</> },
-                                {title: "Consumables", desc: apiData?.consumables  },
+                                {title: "Classification", desc: apiData?.classification },
+                                {title: "Designation", desc: apiData?.designation },
+                                {title: "Average Height", desc: <>{apiData?.average_height} cm</>  },
+                                {title: "Average Lifespan ", desc: <>{apiData?.average_lifespan} years</>   },
                             ]}
                         />
 
@@ -43,11 +43,10 @@ const VehicleDetailView = props => {
                         <DetailList
                             loading={props.loading}
                             data={[
-                                {title: "Cost in Galactic Credits", desc: apiData?.cost_in_credits },
-                                {title: "Crew", desc: apiData?.crew },
-                                {title: "Passengers", desc: apiData?.passengers },
-                                {title: "Max Atmosphering Speed", desc: apiData?.max_atmosphering_speed  },
-                                {title: "Cargo Capacity", desc: <>{apiData?.cargo_capacity} Kg</>  },
+                                {title: "Eye Colors", desc: apiData?.eye_colors },
+                                {title: "Hair Colors", desc: apiData?.hair_colors },
+                                {title: "Skin Colors", desc: apiData?.skin_colors },
+                                {title: "Language", desc: apiData?.language },
                             ]}
                         />
 
@@ -55,11 +54,11 @@ const VehicleDetailView = props => {
                 </Row>
 
                 <RelatedPeople
+                    people={apiData?.people}
                     history={props.history}
-                    itemImgSrc="/img/icons/pilot.png"
-                    title="Related Pilots"
-                    people={apiData?.pilots}
-                    personType="pilot"
+                    itemImgSrc="/img/icons/actor.png"
+                    title="Related People"
+                    personType="person"
                 />
 
                 <RelatedFilms
@@ -73,9 +72,9 @@ const VehicleDetailView = props => {
     );
 };
 
-VehicleDetailView.propTypes = {
+SpecieDetailView.propTypes = {
     apiData: PropTypes.object,
     history: PropTypes.func,
 };
 
-export default VehicleDetailView;
+export default SpecieDetailView;

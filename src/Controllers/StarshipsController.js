@@ -1,16 +1,16 @@
 import React, {
     useEffect,
     useState
-}                        from 'react';
-import VehicleDetailView from "../Views/Vehicles/VehicleDetailView";
-import VehicleListView   from "../Views/Vehicles/VehicleListView";
-import VehiclesService   from "../Services/VehiclesService";
-import {usePaginate}     from "../Hooks/Helpers";
+}                         from 'react';
+import {usePaginate}      from "../Hooks/Helpers";
+import StarshipsService   from "../Services/StarshipsService";
+import StarshipDetailView from "../Views/Starships/SpecieDetailView";
+import StarshipListView   from "../Views/Starships/StarshipListView";
 
-const VehiclesController = props => {
+const StarshipsController = props => {
     const [apiData, setApiData] = useState(null);
     const [search, setSearch] = useState(null);
-    const service = VehiclesService({loadingControl: true});
+    const service = StarshipsService({loadingControl: true});
     const {match, history} = props;
 
     const [page, setPage] = usePaginate((page) => {
@@ -47,7 +47,7 @@ const VehiclesController = props => {
 
     if(match.params.id) {
         return (
-            <VehicleDetailView
+            <StarshipDetailView
                 history={history}
                 apiData={apiData}
                 getData={getData}
@@ -57,7 +57,7 @@ const VehiclesController = props => {
 
     } else {
         return (
-            <VehicleListView
+            <StarshipListView
                 history={history}
                 setSearch={setSearch}
                 setPage={setPage}
@@ -70,4 +70,4 @@ const VehiclesController = props => {
     }
 };
 
-export default VehiclesController;
+export default StarshipsController;

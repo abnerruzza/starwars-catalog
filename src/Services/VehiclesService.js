@@ -1,8 +1,6 @@
 import React              from 'react';
-import useApi             from "../Hooks/Api";
 import type {ApiConfig}   from "../Hooks/Api";
-import moment             from "moment";
-import type PlanetsModel  from "../Models/PlanetsModel";
+import useApi             from "../Hooks/Api";
 import type VehiclesModel from "../Models/VehiclesModel";
 
 type VehiclesServiceApi = ApiConfig;
@@ -47,7 +45,7 @@ const VehiclesService = (config: VehiclesServiceApi) => {
         }
     }
 
-    return {list, getOne, api};
+    return {list, getOne, api, mutate};
 };
 
 export default VehiclesService;

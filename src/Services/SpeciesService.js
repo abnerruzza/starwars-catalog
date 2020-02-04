@@ -1,41 +1,41 @@
 import React             from 'react';
 import type {ApiConfig}  from "../Hooks/Api";
 import useApi            from "../Hooks/Api";
-import type PlanetsModel from "../Models/PlanetsModel";
+import type SpeciesModel from "../Models/SpeciesModel";
 
-type PlanetsServiceApi = ApiConfig;
+type SpeciesServiceApi = ApiConfig;
 
-const PlanetsService = (config: PlanetsServiceApi) => {
+const SpeciesService = (config: SpeciesServiceApi) => {
     const api = useApi(config);
 
-    const list = async (search, page): PlanetsModel[] => {
+    const list = async (search, page): SpeciesModel[] => {
 
         let apiParams = new URLSearchParams({search: (search || ""), page: (page || 1)}).toString();
 
         try {
-            const data = await api.get(`planets/?${apiParams}`);
+            const data = await api.get(`species/?${apiParams}`);
 
             return {
                 ...data,
-                results: data.results.map((item: PlanetsModel) => {
+                results: data.results.map((item: SpeciesModel) => {
                     return mutate(item);
                 })
             }
 
         } catch (e) {
-            throw {error: true, message: "Ops. Planets list dont working :("};
+            throw {error: true, message: "Ops. Species list dont working :("};
         }
     };
 
-    const getOne = async (id): PlanetsModel => {
+    const getOne = async (id): SpeciesModel => {
         try {
-            return mutate(await api.get(`planets/${id}`));
+            return mutate(await api.get(`species/${id}`));
         } catch (e) {
             throw {error: true, message: "Ops."};
         }
     }
 
-    const mutate = (data: PlanetsModel) => {
+    const mutate = (data: SpeciesModel) => {
 
         const urlPieces = data.url.split("/");
 
@@ -48,4 +48,4 @@ const PlanetsService = (config: PlanetsServiceApi) => {
     return {list, getOne, api, mutate};
 };
 
-export default PlanetsService;
+export default SpeciesService;

@@ -1,32 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import PropTypes                    from 'prop-types';
-import FilmsService                 from "../../../Services/FilmsService";
-import type FilmsModel              from "../../../Models/FilmsModel";
-import SplideContainer              from "../../Generics/SplideContainer";
+import React, {
+    useEffect,
+    useState
+}                      from 'react';
+import PropTypes       from 'prop-types';
+import type FilmsModel from "../../../Models/FilmsModel";
+import SplideContainer from "../../Generics/SplideContainer";
 import {
-    Badge,
-    Card,
-    CardBody,
-    CardSubtitle,
-    CardText,
-    CardTitle,
     Col,
     Container,
     Row
-}                                   from "reactstrap";
-import {Link}                       from "react-router-dom";
-import LoadingSvg                   from "../../Generics/LoadingSvg";
+}                      from "reactstrap";
+import {Link}          from "react-router-dom";
+import LoadingSvg      from "../../Generics/LoadingSvg";
+import ListCard        from "../../Generics/ListCard";
 
 const FilmsBlockList = props => {
-    const [films, setFilms] = useState([]);
+    const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const listFilms = async () => {
+    const listData = async () => {
         setLoading(true);
         try {
-            const data = await props.listFilms();
-            setFilms( data.results );
+            const res = await props.listData();
+            setData( res.results );
             setLoading(false);
         } catch (e) {
             setError( e.message );
@@ -35,7 +32,7 @@ const FilmsBlockList = props => {
     };
 
     useEffect(() => {
-        listFilms();
+        listData();
     }, []);
 
 
@@ -53,21 +50,22 @@ const FilmsBlockList = props => {
                             :
                             <SplideContainer
                                 className="films-list"
-                                options={{rewind: true, type: 'loop', perPage: 3, pagination: false, gap: 20, breakpoints: {640: {perPage: 1}, 768: {perPage: 2}, 1024: {perPage: 3}} } }
-                                slides={films.map((item: FilmsModel, index) => {
+                                options={{rewind: true, type: 'loop', perPage: 2, pagination: false, gap: 20, breakpoints: {1024: {perPage: 1}} } }
+                                slides={data.map((item: FilmsModel, index) => {
+
+                                    const detailUrl = `/films/${item.id}`;
 
                                     return (
-                                        <Card key={index} className="text-center cursor-pointer">
-                                            <CardBody>
-                                                <img src="/img/icons/photographic-film.png" alt="Film" className="mb-2"/>
-                                                <CardTitle>
-                                                    <h5><Badge color="secondary">Episode {item.episode_id}</Badge></h5>
-                                                    <h4><Link to={'/'}>{item.title}</Link></h4>
-                                                </CardTitle>
-                                                <CardSubtitle>Director: {item.director}</CardSubtitle>
-                                                <CardText><small>{item.opening_crawl}</small></CardText>
-                                            </CardBody>
-                                        </Card>
+                                        <ListCard
+                                            key={index}
+                                            onClick={() => props.history.push(detailUrl)}
+                                            url={detailUrl}
+                                            borderColor="blue-border"
+                                            iconSrc="/img/icons/photographic-film.png"
+                                            title={item.title}
+                                            subtitle={"Episode " + item.episode_id}
+                                            resume={item.opening_crawl}
+                                        />
                                     )
 
                                 })}
@@ -79,7 +77,7 @@ const FilmsBlockList = props => {
                 {(!loading && !error) &&
                     <Row>
                         <Col className="text-right px-5 pt-3">
-                            <Link to={"/"}>+ See all</Link>
+                            <Link to={"/films"}>+ See all</Link>
                         </Col>
                     </Row>
                 }
@@ -90,7 +88,7 @@ const FilmsBlockList = props => {
 };
 
 FilmsBlockList.propTypes = {
-    listFilms: PropTypes.func,
+    listData: PropTypes.func,
 };
 
 export default FilmsBlockList;

@@ -1,43 +1,68 @@
-import React, {useState, useEffect} from 'react';
-import PeopleService                from "../Services/PeopleService";
+import React, {
+    useEffect,
+    useState
+}                       from 'react';
+import PeopleService    from "../Services/PeopleService";
 import PeopleDetailView from "../Views/People/PeopleDetailView";
-import PeopleListView from "../Views/People/PeopleListView";
+import PeopleListView   from "../Views/People/PeopleListView";
+import {usePaginate}    from "../Hooks/Helpers";
 
 const PeopleController = props => {
-    const [peopleData, setPeopleData] = useState(null);
+    const [apiData, setApiData] = useState(null);
     const [search, setSearch] = useState(null);
-    const peopleService = PeopleService({loadingControl: true});
+    const service = PeopleService({loadingControl: true});
     const {match, history} = props;
 
-    const listPeople = async () => {
+    const [page, setPage] = usePaginate((page) => {
+        scrollToElement("body");
+        setApiData([]);
+        listData(page);
+    });
+
+    const listData = async (page) => {
         try {
-            const data =  await peopleService.list(search);
-            setPeopleData(data)
+            const data =  await service.list(search, page);
+            setApiData(data)
         } catch (e) { throw e; }
     };
 
-    const getPeople = async () => {
+    const getData = async () => {
         try {
-            const data = await peopleService.getOne(match.params.id);
-            setPeopleData(data);
+            const data = await service.getOne(match.params.id);
+            setApiData(data);
         } catch (e) { throw e; }
     };
 
     useEffect(() => {
 
         if(match.params.id)
-            getPeople();
+            getData();
         else
-            listPeople();
+            listData();
 
     }, [match.params.id]);
 
     if(match.params.id) {
         return (
-            <PeopleDetailView history={history} peopleData={peopleData} getPeople={getPeople} loading={peopleService.api.loading} />
+            <PeopleDetailView
+                history={history}
+                apiData={apiData}
+                getData={getData}
+                loading={service.api.loading}
+            />
         )
     } else {
-        return <PeopleListView history={history} setSearch={setSearch} peopleData={peopleData} listPeople={listPeople} loading={peopleService.api.loading} />
+        return (
+            <PeopleListView
+                history={history}
+                setSearch={setSearch}
+                setPage={setPage}
+                page={page}
+                apiData={apiData}
+                listData={listData}
+                loading={service.api.loading}
+            />
+        )
     }
 };
 

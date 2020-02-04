@@ -11,7 +11,7 @@ import DetailList       from "../../Components/Generics/DetailList";
 import RelatedPeople    from "../../Components/ViewComponents/RelatedContent/RelatedPeople";
 import RelatedFilms     from "../../Components/ViewComponents/RelatedContent/RelatedFilms";
 
-const VehicleDetailView = props => {
+const StarshipDetailView = props => {
 
     const {apiData} = props;
 
@@ -30,10 +30,10 @@ const VehicleDetailView = props => {
                             loading={props.loading}
                             data={[
                                 {title: "Model", desc: apiData?.model },
-                                {title: "Vehicle Class", desc: apiData?.vehicle_class  },
-                                {title: "Manufacturer ", desc: apiData?.manufacturer   },
-                                {title: "Length", desc: <>{apiData?.length} meters</> },
-                                {title: "Consumables", desc: apiData?.consumables  },
+                                {title: "Starship Class", desc: apiData?.starship_class },
+                                {title: "Manufacturer", desc: apiData?.manufacturer },
+                                {title: "Cost in Credits", desc: apiData?.cost_in_credits },
+                                {title: "MGLT", desc: <>{apiData?.MGLT} Megalights</> },
                             ]}
                         />
 
@@ -43,11 +43,11 @@ const VehicleDetailView = props => {
                         <DetailList
                             loading={props.loading}
                             data={[
-                                {title: "Cost in Galactic Credits", desc: apiData?.cost_in_credits },
+                                {title: "Length", desc: <>{apiData?.length} meters</> },
                                 {title: "Crew", desc: apiData?.crew },
                                 {title: "Passengers", desc: apiData?.passengers },
-                                {title: "Max Atmosphering Speed", desc: apiData?.max_atmosphering_speed  },
-                                {title: "Cargo Capacity", desc: <>{apiData?.cargo_capacity} Kg</>  },
+                                {title: "Max Atmosphering Speed", desc: apiData?.max_atmosphering_speed },
+                                {title: "Hyperdrive Rating", desc: apiData?.hyperdrive_rating },
                             ]}
                         />
 
@@ -55,10 +55,10 @@ const VehicleDetailView = props => {
                 </Row>
 
                 <RelatedPeople
+                    people={apiData?.pilots}
                     history={props.history}
                     itemImgSrc="/img/icons/pilot.png"
                     title="Related Pilots"
-                    people={apiData?.pilots}
                     personType="pilot"
                 />
 
@@ -73,9 +73,11 @@ const VehicleDetailView = props => {
     );
 };
 
-VehicleDetailView.propTypes = {
+StarshipDetailView.propTypes = {
     apiData: PropTypes.object,
     history: PropTypes.func,
+    getData: PropTypes.func,
+    loading: PropTypes.bool,
 };
 
-export default VehicleDetailView;
+export default StarshipDetailView;

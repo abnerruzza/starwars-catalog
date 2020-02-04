@@ -1,8 +1,7 @@
 import React, {
-    useState,
+    useCallback,
     useRef,
-    useMemo,
-    useCallback
+    useState
 }                from 'react';
 import PropTypes from 'prop-types';
 import {Env}     from "../Config/Env";
@@ -101,7 +100,9 @@ const useApi = (config?: ApiConfig) => {
                 obj.body = JSON.stringify(data);
             }
 
-            fetch(`${config.apiUrl}/${path}`, obj)
+            const finalUrl = path ? `${config.apiUrl}/${path}` : config.apiUrl;
+
+            fetch(finalUrl, obj)
                 .then((response) => {
                     try {
                         return response.json()

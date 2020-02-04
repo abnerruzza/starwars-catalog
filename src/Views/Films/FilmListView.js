@@ -1,16 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Badge, Button, Card, CardBody, CardHeader, CardSubtitle, CardText, CardTitle, Col, Container, Form, FormGroup, Input, InputGroup, InputGroupAddon, Label, Row} from "reactstrap";
-import {Link} from "react-router-dom";
-import LoadingSvg from "../../Components/Generics/LoadingSvg";
-import PageTitleSection from "../../Components/Generics/PageTitleSection";
+import React             from 'react';
+import PropTypes         from 'prop-types';
+import {
+    Col,
+    Container,
+    Row
+}                        from "reactstrap";
+import LoadingSvg        from "../../Components/Generics/LoadingSvg";
+import PageTitleSection  from "../../Components/Generics/PageTitleSection";
 import PageSearchSection from "../../Components/Generics/PageSearchSection";
-import type FilmsModel from "../../Models/FilmsModel";
-import ListCard from "../../Components/Generics/ListCard";
+import type FilmsModel   from "../../Models/FilmsModel";
+import ListCard          from "../../Components/Generics/ListCard";
+import Pagination        from "../../Components/Generics/Pagination";
 
 const FilmListView = props => {
     return (
-        <>
+        <div className="main-content">
 
             <PageTitleSection
                 title="Films"
@@ -18,7 +22,7 @@ const FilmListView = props => {
             />
 
             <PageSearchSection
-                listFunction={props.listFilms}
+                listFunction={props.listData}
                 setSearchValue={props.setSearch}
                 fieldPlaceholder="Search for Film title"
             />
@@ -29,19 +33,19 @@ const FilmListView = props => {
 
                 <Container fluid>
                     <Row >
-                        {props.filmData?.results?.map((item: FilmsModel, index) => {
+                        {props.apiData?.results?.map((item: FilmsModel, index) => {
 
                             const detailUrl = `/films/${item.id}`;
 
                             return (
 
-                                <Col key={index} sm={4} className="mb-5">
+                                <Col key={index} sm={12} md={6} lg={4} className="mb-5">
 
                                     <ListCard
                                         onClick={() => props.history.push(detailUrl)}
                                         url={detailUrl}
                                         borderColor="blue-border"
-                                        iconSrc="/img/icons/actor.png"
+                                        iconSrc="/img/icons/photographic-film.png"
                                         title={item.title}
                                         subtitle={"Episode " + item.episode_id}
                                         resume={item.opening_crawl}
@@ -52,15 +56,27 @@ const FilmListView = props => {
                             )
                         })}
                     </Row>
+
+                    <Pagination
+                        hasPrevious={!!props.apiData?.previous}
+                        hasNext={!!props.apiData?.next}
+                        page={props.page}
+                        setPage={props.setPage}
+                    />
                 </Container>
             </section>
 
-        </>
+        </div>
     );
 };
 
 FilmListView.propTypes = {
-    setFilter: PropTypes.func,
+    apiData: PropTypes.array,
+    listData: PropTypes.func,
+    setSearch: PropTypes.func,
+    history: PropTypes.object,
+    page: PropTypes.number,
+    setPage: PropTypes.func,
 };
 
 export default FilmListView;

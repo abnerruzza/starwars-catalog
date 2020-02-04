@@ -1,22 +1,20 @@
-import React from 'react';
-import useApi from "../Hooks/Api";
+import React            from 'react';
 import type {ApiConfig} from "../Hooks/Api";
-import type FilmsModel from "../Models/FilmsModel";
-import moment from "moment";
+import useApi           from "../Hooks/Api";
+import type FilmsModel  from "../Models/FilmsModel";
+import moment           from "moment";
 
 type FilmsServiceApi = ApiConfig;
 
 const FilmsService = (config: FilmsServiceApi) => {
     const api = useApi(config);
 
-    const list = async (search): FilmsModel[] => {
+    const list = async (search, page): FilmsModel[] => {
 
-        let searchParam = "";
-
-        if(search) searchParam = `?search=${search}`;
+        let apiParams = new URLSearchParams({search: (search || ""), page: (page || 1)}).toString();
 
         try {
-            const data = await api.get(`films/${searchParam}`);
+            const data = await api.get(`films/?${apiParams}`);
 
             return {
                 ...data,
@@ -51,7 +49,7 @@ const FilmsService = (config: FilmsServiceApi) => {
         }
     }
 
-    return {list, getOne, api};
+    return {list, getOne, api, mutate};
 };
 
 export default FilmsService;

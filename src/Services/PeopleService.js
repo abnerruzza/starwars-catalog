@@ -1,8 +1,7 @@
-import React from 'react';
-import useApi from "../Hooks/Api";
+import React            from 'react';
 import type {ApiConfig} from "../Hooks/Api";
-import type FilmsModel from "../Models/FilmsModel";
-import moment from "moment";
+import useApi           from "../Hooks/Api";
+import moment           from "moment";
 import type PeopleModel from "../Models/PeopleModel";
 
 type PeopleServiceApi = ApiConfig;
@@ -10,14 +9,12 @@ type PeopleServiceApi = ApiConfig;
 const PeopleService = (config: PeopleServiceApi) => {
     const api = useApi(config);
 
-    const list = async (search): PeopleModel[] => {
+    const list = async (search, page): PeopleModel[] => {
 
-        let searchParam = "";
-
-        if(search) searchParam = `?search=${search}`;
+        let apiParams = new URLSearchParams({search: (search || ""), page: (page || 1)}).toString();
 
         try {
-            const data = await api.get(`people/${searchParam}`);
+            const data = await api.get(`people/?${apiParams}`);
 
             return {
                 ...data,
@@ -43,6 +40,8 @@ const PeopleService = (config: PeopleServiceApi) => {
 
         const urlPieces = data.url.split("/");
 
+        console.log({data, id: urlPieces[urlPieces.length - 2]});
+
         return {
             ...data,
             id: urlPieces[urlPieces.length - 2],
@@ -52,7 +51,7 @@ const PeopleService = (config: PeopleServiceApi) => {
         }
     }
 
-    return {list, getOne, api};
+    return {list, getOne, api, mutate};
 };
 
 export default PeopleService;

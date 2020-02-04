@@ -1,20 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {BulletList, List} from 'react-content-loader'
+import React            from 'react';
+import PropTypes        from 'prop-types';
+import {List}           from 'react-content-loader'
 import PageTitleSection from "../../Components/Generics/PageTitleSection";
-import LoadingSvg from "../../Components/Generics/LoadingSvg";
-import {Badge, Button, Col, Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Row} from "reactstrap";
-import DetailList from "../../Components/Generics/DetailList";
+import LoadingSvg       from "../../Components/Generics/LoadingSvg";
+import {
+    Col,
+    Container,
+    Row
+}                       from "reactstrap";
+import DetailList       from "../../Components/Generics/DetailList";
+import RelatedVehicles  from "../../Components/ViewComponents/RelatedContent/RelatedVehicles";
+import RelatedPlanets   from "../../Components/ViewComponents/RelatedContent/RelatedPlanets";
+import RelatedStarships from "../../Components/ViewComponents/RelatedContent/RelatedStarships";
+import RelatedSpecies   from "../../Components/ViewComponents/RelatedContent/RelatedSpecies";
 
 const FilmDetailView = props => {
 
-    const {filmData} = props;
+    const {apiData} = props;
 
     return (
-        <>
+        <div className="main-content">
             <PageTitleSection
-                title={props.loading ? <LoadingSvg/> : filmData?.title}
-                subtitle={props.loading ? <LoadingSvg/> : `Episode ${filmData?.episode_id}`}
+                title={props.loading ? <LoadingSvg/> : apiData?.title}
+                subtitle={props.loading ? '' : `Episode ${apiData?.episode_id}`}
+                imgSrc="/img/icons/photographic-film.png"
             />
 
             <Container className="mt-5">
@@ -25,9 +34,9 @@ const FilmDetailView = props => {
                             <DetailList
                                 loading={props.loading}
                                 data={[
-                                    {title: "Director", desc: filmData?.director},
-                                    {title: "Producer", desc: filmData?.producer},
-                                    {title: "Release Date", desc: filmData?.release_date_formatted},
+                                    {title: "Director", desc: apiData?.director},
+                                    {title: "Producer", desc: apiData?.producer},
+                                    {title: "Release Date", desc: apiData?.release_date_formatted},
                                 ]}
                             />
 
@@ -41,27 +50,7 @@ const FilmDetailView = props => {
                                 :
                                 <>
                                     <h2>Opening Crawl</h2>
-                                    {filmData?.opening_crawl}
-
-
-                                    <div className="mt-3">
-                                        <Button color="primary" outline>
-                                            Planets <Badge color="secondary">{filmData?.planets?.length}</Badge>
-                                        </Button>
-                                        &nbsp;&nbsp;
-                                        <Button color="primary" outline>
-                                            Species <Badge color="secondary">{filmData?.species?.length}</Badge>
-                                        </Button>
-                                        &nbsp;&nbsp;
-                                        <Button color="primary" outline>
-                                            Starships <Badge color="secondary">{filmData?.starships?.length}</Badge>
-                                        </Button>
-                                        &nbsp;&nbsp;
-                                        <Button color="primary" outline>
-                                            Vehicles <Badge color="secondary">{filmData?.vehicles?.length}</Badge>
-                                        </Button>
-                                    </div>
-
+                                    {apiData?.opening_crawl}
                                 </>
                             }
                         </article>
@@ -69,14 +58,38 @@ const FilmDetailView = props => {
 
                     </Col>
                 </Row>
+
+                <RelatedPlanets
+                    history={props.history}
+                    planets={apiData?.planets}
+                />
+
+                <RelatedVehicles
+                    history={props.history}
+                    vehicles={apiData?.vehicles}
+                />
+
+                <RelatedStarships
+                    history={props.history}
+                    starships={apiData?.starships}
+                />
+
+                <RelatedSpecies
+                    history={props.history}
+                    species={apiData?.species}
+                />
+
             </Container>
 
-        </>
+        </div>
     );
 };
 
 FilmDetailView.propTypes = {
-    filmData: PropTypes.object,
+    apiData: PropTypes.object,
+    history: PropTypes.func,
+    getData: PropTypes.func,
+    loading: PropTypes.bool,
 };
 
 export default FilmDetailView;
