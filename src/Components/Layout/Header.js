@@ -49,16 +49,15 @@ const Header = props => {
                         <li className="nav-item">
                             <NavLink className="nav-link text-white" to="/planets">Planets</NavLink>
                         </li>
-                        <UncontrolledDropdown nav direction="down">
-                            <DropdownToggle tag='a' caret className="nav-link cursor-pointer text-white">
-                                More
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <Link className="dropdown-item" to={"/vehicles"} >Vehicles</Link>
-                                <Link className="dropdown-item" to={"/starships"} >Starships</Link>
-                                <Link className="dropdown-item" to={"/species"} >Species</Link>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white" to="/planets">Vehicles</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white" to="/planets">Starships</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white" to="/planets">Species</NavLink>
+                        </li>
                     </ul>
 
 
