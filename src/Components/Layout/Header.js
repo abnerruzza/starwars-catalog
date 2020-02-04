@@ -3,11 +3,13 @@ import PropTypes                    from 'prop-types';
 import useWindowScrollPosition      from '@rehooks/window-scroll-position';
 import {Link, NavLink}              from "react-router-dom";
 import {
+    Collapse,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
     UncontrolledDropdown
-} from "reactstrap";
+}                                   from "reactstrap";
+import Icon                         from "../Generics/Icon";
 
 /**
  * O Header tem um pacote que atualiza o state desse component quando
@@ -16,6 +18,7 @@ import {
  */
 const Header = props => {
     const [shrink, setShrink] = useState(false);
+    const [collapse, setCollapse] = useState(false);
     const scroll = useWindowScrollPosition({throttle: 50});
 
     useEffect(() => {
@@ -36,33 +39,43 @@ const Header = props => {
                 <div className="container">
                     <Link className="navbar-brand" to="/"><span>Star</span>Wars Catalog</Link>
 
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                    <ul className="navbar-nav ml-auto d-none d-md-flex">
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white" to="/films">Films</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white" to="/people">People</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white" to="/planets">Planets</NavLink>
+                        </li>
+                        <UncontrolledDropdown nav direction="down">
+                            <DropdownToggle tag='a' caret className="nav-link cursor-pointer text-white">
+                                More
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <Link className="dropdown-item" to={"/vehicles"} >Vehicles</Link>
+                                <Link className="dropdown-item" to={"/starships"} >Starships</Link>
+                                <Link className="dropdown-item" to={"/species"} >Species</Link>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </ul>
 
-                    <div className="collapse navbar-collapse" id="collapsibleNavbar">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/films">Films</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/people">People</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/planets">Planets</NavLink>
-                            </li>
-                            <UncontrolledDropdown nav>
-                                <DropdownToggle tag='a' caret className="nav-link cursor-pointer">
-                                    More
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                    <Link className="dropdown-item" to={"/vehicles"} >Vehicles</Link>
-                                    <Link className="dropdown-item" to={"/starships"} >Starships</Link>
-                                    <Link className="dropdown-item" to={"/species"} >Species</Link>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </ul>
-                    </div>
+
+                    <UncontrolledDropdown direction="down" size="lg" className="d-flex d-md-none">
+                        <DropdownToggle tag='a' className="nav-link cursor-pointer text-white">
+                            <Icon name="bars" style={{fontSize: 28}} />
+                        </DropdownToggle>
+                        <DropdownMenu>
+                            <Link className="dropdown-item" to={"/films"} >Films</Link>
+                            <Link className="dropdown-item" to={"/people"} >People</Link>
+                            <Link className="dropdown-item" to={"/planets"} >Planets</Link>
+                            <Link className="dropdown-item" to={"/vehicles"} >Vehicles</Link>
+                            <Link className="dropdown-item" to={"/starships"} >Starships</Link>
+                            <Link className="dropdown-item" to={"/species"} >Species</Link>
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
+
                 </div>
             </nav>
 

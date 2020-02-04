@@ -17,24 +17,18 @@ export default class ErrorBoundary extends React.Component {
     render() {
         if (this.state.errorInfo) {
             return (
-                <div id="notfound">
-                    <div className="notfound-bg"></div>
-                    <div className="notfound">
-                        <div className="notfound-404">
+                <div className="d-flex flex-row justify-content-center align-items-center" style={{width: '100%', height: '100%'}}>
+                    <div className="container text-center">
+                        <div className="py-3">
                             <h1>Eita!</h1>
                         </div>
                         <h2>O sistema apresentou um erro inesperado!</h2>
-                        <a href="#" className="home-btn">Atualizar página</a>
-                        <a href="#" className="contact-btn">Mande esse erro para nós!</a>
-                        <div className="notfound-social">
-                            <a href="#"><i className="fa fa-facebook"></i></a>
-                            <a href="#"><i className="fa fa-twitter"></i></a>
-                            <a href="#"><i className="fa fa-pinterest"></i></a>
-                            <a href="#"><i className="fa fa-google-plus"></i></a>
-                        </div>
+                        <p>Tente atualizar a página para corrigir este erro</p>
+                        <br/>
+                        <a href="/" className="btn btn-primary">Atualizar página</a>
 
-                        <div>
-                            {Env.debug == true ? this.state.errorInfo.componentStack : null}
+                        <div className="mt-5">
+                            <code>{Env.debug == true ? this.state.errorInfo.componentStack : null}</code>
                         </div>
                     </div>
                 </div>
