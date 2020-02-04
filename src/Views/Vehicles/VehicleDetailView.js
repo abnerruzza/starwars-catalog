@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {BulletList, List} from 'react-content-loader'
 import PageTitleSection from "../../Components/Generics/PageTitleSection";
 import LoadingSvg from "../../Components/Generics/LoadingSvg";
 import {Badge, Button, Col, Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Row} from "reactstrap";
@@ -44,7 +43,7 @@ const VehicleDetailView = props => {
                                 {title: "Crew", desc: apiData?.crew },
                                 {title: "Passengers", desc: apiData?.passengers },
                                 {title: "Max Atmosphering Speed", desc: apiData?.max_atmosphering_speed  },
-                                {title: "Cargo Capacity", desc: apiData?.cargo_capacity  },
+                                {title: "Cargo Capacity", desc: <>{apiData?.cargo_capacity} Kg</>  },
                             ]}
                         />
 

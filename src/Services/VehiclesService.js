@@ -10,14 +10,12 @@ type VehiclesServiceApi = ApiConfig;
 const VehiclesService = (config: VehiclesServiceApi) => {
     const api = useApi(config);
 
-    const list = async (search): VehiclesModel[] => {
+    const list = async (search, page): VehiclesModel[] => {
 
-        let searchParam = "";
-
-        if(search) searchParam = `?search=${search}`;
+        let apiParams = new URLSearchParams({search: (search || ""), page: (page || 1)}).toString();
 
         try {
-            const data = await api.get(`vehicles/${searchParam}`);
+            const data = await api.get(`vehicles/?${apiParams}`);
 
             return {
                 ...data,

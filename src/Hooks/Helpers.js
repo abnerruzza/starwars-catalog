@@ -1,6 +1,20 @@
 import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
 import debounce from 'lodash/debounce';
 
+export const usePaginate = (effect) => {
+    const [page, setPage] = useState(1);
+
+    const setPageWithCondition = (page) => {
+        setPage(page > 1 ? page : 1);
+    }
+
+    useEffect(() => {
+        effect(page);
+    }, [page]);
+
+    return [page, setPageWithCondition];
+}
+
 export const useMergeState = initialState => {
     const [state, dispatch] = useState(initialState);
 

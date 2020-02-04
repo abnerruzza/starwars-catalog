@@ -6,6 +6,7 @@ import LoadingSvg from "../../Components/Generics/LoadingSvg";
 import PageTitleSection from "../../Components/Generics/PageTitleSection";
 import PageSearchSection from "../../Components/Generics/PageSearchSection";
 import type PeopleModel from "../../Models/PeopleModel";
+import ListCard from "../../Components/Generics/ListCard";
 
 const PeopleListView = props => {
     return (
@@ -29,20 +30,31 @@ const PeopleListView = props => {
                 <Container fluid>
                     <Row >
                         {props.peopleData?.results?.map((item: PeopleModel, index) => {
+
+                            const detailUrl = `/people/${item.id}`;
+
                             return (
 
-                                <Col sm={4} className="mb-5">
-                                    <Card key={index} className="text-center cursor-pointer" onClick={() => props.history.push(`/people/${item.id}`)}>
-                                        <CardBody>
-                                            <img src="/img/icons/actor.png" alt="Actor" className="mb-2"/>
-                                            <CardTitle>
-                                                <h5>{item.mass} Kg</h5>
-                                                <h4><Link to={`/people/${item.id}`}>{item.name}</Link></h4>
-                                            </CardTitle>
-                                            <CardSubtitle>{item.birth_year}</CardSubtitle>
-                                            <CardText>s</CardText>
-                                        </CardBody>
-                                    </Card>
+                                <Col key={index} sm={12} md={6} lg={4} xl={3} className="mb-5">
+
+                                    <ListCard
+                                        onClick={() => props.history.push(detailUrl)}
+                                        url={detailUrl}
+                                        borderColor="blue-border"
+                                        iconSrc="/img/icons/actor.png"
+                                        title={item.name}
+                                        subtitle={"actor"}
+                                        numbers={[
+                                            {title: "Mass", value: item.mass + "Kg"},
+                                            {title: "Birth Year", value: item.birth_year},
+                                        ]}
+                                        relations={[
+                                            {title: "Species", icon: "/img/icons/actor.png", items: item.species},
+                                            {title: "Vehicles", icon: "/img/icons/rickshaw.png", items: item.vehicles},
+                                            {title: "Films", icon: "/img/icons/photographic-film.png", items: item.films}
+                                        ]}
+                                    />
+
                                 </Col>
 
                             )

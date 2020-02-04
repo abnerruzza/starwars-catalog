@@ -1,4 +1,6 @@
 
+body {background-color: #f1f1f1}
+
 .cursor-pointer { cursor: pointer }
 
 .splide__arrow--prev {
@@ -27,6 +29,84 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+
+.card-box {
+  padding: 20px;
+  border-radius: 3px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.card-box:hover {
+  box-shadow: 0 0 5px 0 #ccc;
+}
+
+.card-box .card-title {
+  line-height: 36px;
+}
+
+.project-box {
+  position: relative
+}
+
+.project-box .badge {
+  position: absolute;
+  right: 20px
+}
+
+.project-box h4 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
+  overflow: hidden
+}
+
+.project-box ul li {
+  padding-right: 30px
+}
+
+.project-box .project-members .relation{
+  margin: 0 0 10px -12px;
+  display: inline-block;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 24px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02);
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02)
+}
+
+.project-box .project-members a:first-of-type {
+  margin-left: 0
+}
+
+.thumb-sm {
+  height: 36px;
+  width: 36px;
+}
+
+.font-13 {
+  font-size: 13px!important;
+}
+
+.text-dark {
+  color: #313a46!important;
+}
+
+.card-box .right-img {
+  position: absolute;
+  right: 20px;
+}
+
+.card-box .empty-relation {
+  line-height: 52px;
+  content: '--'
+}
+
+.card-box.green-border { border-left: 2px solid #289e26; }
+.card-box.blue-border { border-left: 2px solid #3c559e; }
+.card-box.teal-border { border-left: 2px solid #08889e; }
 
 /* mobile view */
 @media (max-width:500px)
