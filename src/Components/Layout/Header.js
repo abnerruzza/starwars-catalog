@@ -50,13 +50,13 @@ const Header = props => {
                             <NavLink className="nav-link text-white" to="/planets">Planets</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link text-white" to="/planets">Vehicles</NavLink>
+                            <NavLink className="nav-link text-white" to="/vehicles">Vehicles</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link text-white" to="/planets">Starships</NavLink>
+                            <NavLink className="nav-link text-white" to="/starships">Starships</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link text-white" to="/planets">Species</NavLink>
+                            <NavLink className="nav-link text-white" to="/species">Species</NavLink>
                         </li>
                     </ul>
 
